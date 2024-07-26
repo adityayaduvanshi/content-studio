@@ -98,7 +98,10 @@ const InspirationComponent: React.FC = () => {
     >
       {children}
     </TreeItem>
+  
   );
+
+  console.log("jaja")
 
   return (
     <div className="p-5 border-b">
