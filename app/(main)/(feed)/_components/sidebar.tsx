@@ -5,7 +5,7 @@ import InspirationComponent from './inspiration';
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 border-r  overflow-y-auto flex flex-col">
+    <aside className="w-[280px] border-r  overflow-y-auto flex flex-col">
       <SwitchAccount />
       <Draft />
       <InspirationComponent />

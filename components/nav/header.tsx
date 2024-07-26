@@ -38,6 +38,9 @@ export async function Header(): Promise<JSX.Element> {
         <div className="flex items-center justify-center">
           <ModeToggle />
           {/* <NavigationMobile navItems={siteConfig.navItems} /> */}
+          <Link href="/myfeed">
+            <Button>Dashboard</Button>
+          </Link>
         </div>
       </div>
     </header>
