@@ -9,7 +9,6 @@ export default function Home() {
   return (
     <main className=" h-full">
       <HeroSection />
-
       {/* <main className="container mx-auto h-full"></main> */}
     </main>
   );
