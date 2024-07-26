@@ -46,6 +46,7 @@ const TextEditor = () => {
   }
   const handleAIProcess = async () => {
     setIsProcessing(true);
+    // GET VALUE FROM EDITOR
     const selectedText = editor.state.selection.empty
       ? editor.getText()
       : editor.state.doc.textBetween(
@@ -60,8 +61,10 @@ const TextEditor = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (editor.state.selection.empty) {
+      // IF SELECTION IS EMPTY THEN SET VALUE IN EDITOR
       editor.commands.setContent(processedText);
     } else {
+      // IF SELECTION
       editor.commands.insertContentAt(editor.state.selection, processedText);
     }
 
