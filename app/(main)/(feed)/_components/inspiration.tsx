@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   Bookmark,
   CirclePlus,
@@ -14,14 +14,14 @@ import {
   FolderPen,
   Copy,
   Link,
-} from "lucide-react";
-import { SimpleTreeView } from "@mui/x-tree-view/SimpleTreeView";
-import { TreeItem } from "@mui/x-tree-view/TreeItem";
+} from 'lucide-react';
+import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
+import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 const InspirationComponent: React.FC = () => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -46,7 +46,10 @@ const InspirationComponent: React.FC = () => {
         >
           <span>{label}</span>
           {hoveredItem === label ? (
-            <div className="absolute right-1" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="absolute right-1"
+              onClick={(e) => e.stopPropagation()}
+            >
               <Popover>
                 <PopoverTrigger>
                   <MoreHorizontal className="w-5 h-5 text-gray-500" />
@@ -54,23 +57,23 @@ const InspirationComponent: React.FC = () => {
                 <PopoverContent className="px-2 py-2 w-fit">
                   <div className="grid text-sm text-left">
                     <div className=" flex gap-2 text-md rounded-md hover:bg-slate-200 cursor-pointer py-1 px-2">
-                    <Star className="w-4 h-4" />
+                      <Star className="w-4 h-4" />
                       Add to Favorites
                     </div>
                     <div className="flex gap-2 text-md hover:bg-slate-200 rounded-md cursor-pointer py-2 px-2">
-                    <Link className="w-4 h-4" /> Copy link
+                      <Link className="w-4 h-4" /> Copy link
                     </div>
                     <div className="hover:bg-slate-200 flex gap-2 text-md rounded-md cursor-pointer py-2 px-2">
-                    <Copy className="w-4 h-4" /> Duplicate
+                      <Copy className="w-4 h-4" /> Duplicate
                     </div>
                     <div className="hover:bg-slate-200 flex gap-2 text-md rounded-md cursor-pointer py-2 px-2">
-                    <FolderPen className="w-4 h-4" /> Rename
+                      <FolderPen className="w-4 h-4" /> Rename
                     </div>
                     <div className="hover:bg-slate-200 flex gap-2 text-md rounded-md cursor-pointer py-2 px-2">
                       Move to
                     </div>
                     <div className="hover:bg-slate-200 flex gap-2 text-md rounded-md cursor-pointer py-2 px-2">
-                    <Trash2 className="w-4 h-4" /> Delete
+                      <Trash2 className="w-4 h-4" /> Delete
                     </div>
                     <div className="hover:bg-slate-200 rounded-md flex gap-2 text-md cursor-pointer py-2 px-2">
                       Turn into wiki
@@ -87,21 +90,19 @@ const InspirationComponent: React.FC = () => {
           ) : null}
         </div>
       }
-      
       classes={{
-        root: "text-inherit",
-        content: "p-0 hover:bg-transparent focus:bg-transparent",
-        iconContainer: "w-auto ml-1",
-        label: "p-1",
-        group: "ml-4",
+        root: 'text-inherit',
+        content: 'p-0 hover:bg-transparent focus:bg-transparent',
+        iconContainer: 'w-auto ml-1',
+        label: 'p-1',
+        // group: "ml-4",
       }}
     >
       {children}
     </TreeItem>
-  
   );
 
-  console.log("jaja")
+  console.log('jaja');
 
   return (
     <div className="p-5 border-b">
@@ -123,7 +124,7 @@ const InspirationComponent: React.FC = () => {
         </div>
         <div
           className="flex items-center justify-between p-1 pt-2 rounded-md transition-all duration-200 cursor-pointer hover:bg-gray-100"
-          onMouseEnter={() => setHoveredItem("all-topics")}
+          onMouseEnter={() => setHoveredItem('all-topics')}
           onMouseLeave={() => setHoveredItem(null)}
         >
           <div className="flex items-center space-x-2">
@@ -132,36 +133,45 @@ const InspirationComponent: React.FC = () => {
           </div>
           <span className="text-sm text-gray-500">1234</span>
         </div>
-        <SimpleTreeView
-          expanded={expandedItems}
-          onNodeToggle={handleToggle}
-        >
+        <SimpleTreeView expanded={expandedItems} onNodeToggle={handleToggle}>
           {renderTreeItem(
-            "AI Experts",
+            'AI Experts',
             <>
-              <TreeItem itemId="ai-experts-1" label="Item-1" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto",
-                label: "p-2",
-              }} />
-              <TreeItem itemId="ai-experts-2" label="Item-2" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto",
-                label: "p-2",
-              }} />
-              <TreeItem itemId="ai-experts-3" label="Item-3" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto",
-                label: "p-2",
-              }} />
+              <TreeItem
+                itemId="ai-experts-1"
+                label="Item-1"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto',
+                  label: 'p-2',
+                }}
+              />
+              <TreeItem
+                itemId="ai-experts-2"
+                label="Item-2"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto',
+                  label: 'p-2',
+                }}
+              />
+              <TreeItem
+                itemId="ai-experts-3"
+                label="Item-3"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto',
+                  label: 'p-2',
+                }}
+              />
             </>,
             123
           )}
           {renderTreeItem(
-            "LLM",
+            'LLM',
             <>
               <TreeItem
                 itemId="llm-youtube"
@@ -172,10 +182,10 @@ const InspirationComponent: React.FC = () => {
                   </div>
                 }
                 classes={{
-                  root: "text-inherit",
-                  content: "p-0 hover:bg-transparent focus:bg-transparent",
-                  iconContainer: "w-auto mr-1",
-                  label: "p-2",
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
                 }}
               />
               <TreeItem
@@ -187,10 +197,10 @@ const InspirationComponent: React.FC = () => {
                   </div>
                 }
                 classes={{
-                  root: "text-inherit",
-                  content: "p-0 hover:bg-transparent focus:bg-transparent",
-                  iconContainer: "w-auto mr-1",
-                  label: "p-2",
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
                 }}
               />
               <TreeItem
@@ -202,36 +212,48 @@ const InspirationComponent: React.FC = () => {
                   </div>
                 }
                 classes={{
-                  root: "text-inherit",
-                  content: "p-0 hover:bg-transparent focus:bg-transparent",
-                  iconContainer: "w-auto mr-1",
-                  label: "p-2",
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
                 }}
               />
             </>,
             128
           )}
           {renderTreeItem(
-            "Another Category",
+            'Another Category',
             <>
-              <TreeItem itemId="another-1" label="Item-1" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto mr-1",
-                label: "p-2",
-              }} />
-              <TreeItem itemId="another-2" label="Item-2" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto mr-1",
-                label: "p-2",
-              }} />
-              <TreeItem itemId="another-3" label="Item-3" classes={{
-                root: "text-inherit",
-                content: "p-0 hover:bg-transparent focus:bg-transparent",
-                iconContainer: "w-auto mr-1",
-                label: "p-2",
-              }} />
+              <TreeItem
+                itemId="another-1"
+                label="Item-1"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
+                }}
+              />
+              <TreeItem
+                itemId="another-2"
+                label="Item-2"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
+                }}
+              />
+              <TreeItem
+                itemId="another-3"
+                label="Item-3"
+                classes={{
+                  root: 'text-inherit',
+                  content: 'p-0 hover:bg-transparent focus:bg-transparent',
+                  iconContainer: 'w-auto mr-1',
+                  label: 'p-2',
+                }}
+              />
             </>,
             123
           )}
