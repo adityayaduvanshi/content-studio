@@ -101,7 +101,7 @@ const TextEditor = () => {
   const [showCommand, setShowCommand] = useState(false);
   const [customInstruction, setCustomInstruction] = useState<string>('');
   const editor = useEditor({
-    extensions: [StarterKit, CharacterCount.configure({ limit: 500 })],
+    extensions: [StarterKit, CharacterCount.configure({ limit: 5000 })],
     content: '<p>Start typing here...</p>',
     autofocus: true,
     editorProps: {
@@ -219,18 +219,26 @@ const TextEditor = () => {
     }
   };
 
-  // const handleInputKeyDown = (event) => {
-  //   if (event.key === 'Enter' && customInstruction.trim()) {
-  //     handleCustomInstruction();
-  //   }
-  // };
+  const handleInputKeyDown = (event) => {
+    if (event.key === 'Enter' && customInstruction.trim()) {
+      handleCustomInstruction();
+    }
+  };
+  const check = async () => {
+    try {
+      const response = await axios.get('/api/ai/check');
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="grid gap-y-2 relative pt-24">
       <div className="border rounded-lg p-4">
         <EditorContent
           editor={editor}
           className="prose max-w-none"
-          height={500}
+          // height=""
         />
       </div>
       <div className="flex justify-between items-center space-x-2 mb-2">
@@ -272,14 +280,14 @@ const TextEditor = () => {
                   AI Instructions
                 </h4> */}
                 <div>
-                  {/* <input
+                  <input
                     type="text"
                     value={customInstruction}
                     onChange={(e) => setCustomInstruction(e.target.value)}
                     placeholder="Enter custom instruction"
                     className="w-full text-xs py-2 px-1 border outline-none border-gray-200 rounded"
                     onKeyDown={handleInputKeyDown}
-                  /> */}
+                  />
                 </div>
                 {instructions.map((instruction, index) => (
                   <Button

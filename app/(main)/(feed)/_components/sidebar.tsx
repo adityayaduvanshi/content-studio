@@ -9,13 +9,15 @@ import FooterComponent from './footerComponent';
 const Sidebar = () => {
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(288);
-  const sidebarRef = useRef(null);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: any) => {
       if (!isResizing) return;
-      const newWidth =
-        e.clientX - sidebarRef.current.getBoundingClientRect().left;
+      const sidebar = sidebarRef.current;
+      if (!sidebar) return;
+
+      const newWidth = e.clientX - sidebar.getBoundingClientRect().left;
       if (newWidth > 150 && newWidth < 600) {
         setSidebarWidth(newWidth);
       }
