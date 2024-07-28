@@ -183,7 +183,18 @@ const TextEditor = () => {
           editor.state.selection.from,
           editor.state.selection.to
         );
+    const skeletonHtml = `<div class="animate-pulse">
+        ${selectedText
+          .split('\n')
+          .map(() => '<div class="h-4 bg-gray-200 rounded w-full mb-2"></div>')
+          .join('')}
+      </div>`;
 
+    if (editor.state.selection.empty) {
+      editor.commands.setContent(skeletonHtml);
+    } else {
+      editor.commands.insertContentAt(editor.state.selection, skeletonHtml);
+    }
     try {
       const response = await fetch('/api/ai/content', {
         method: 'POST',
