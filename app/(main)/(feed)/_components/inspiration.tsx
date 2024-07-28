@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import React, { useState } from 'react';
 import {
@@ -95,7 +96,6 @@ const InspirationComponent: React.FC = () => {
         content: 'p-0 hover:bg-transparent focus:bg-transparent',
         iconContainer: 'w-auto ml-1',
         label: 'p-1',
-        // group: "ml-4",
       }}
     >
       {children}

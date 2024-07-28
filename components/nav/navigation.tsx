@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import type { NavItem } from '@/types';
+import { NavItem } from '@/types/ui';
 
 import { cn } from '@/lib/utils';
 import {
