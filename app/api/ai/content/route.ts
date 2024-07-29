@@ -7,7 +7,7 @@ const openai = new OpenAI({
 const systemMessage = `
 You are an AI assistant that helps with text processing.
 Process the given text according to the instruction. 
-Do not include any preambles like "Summary:", "Corrected Text:", etc. 
+Do not include any preambles like "Summary:", "Corrected Text:","Expand on the following text", etc. 
 Respond with the processed text only.
 
 `;

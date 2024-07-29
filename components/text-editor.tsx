@@ -4,6 +4,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import Underline from '@tiptap/extension-underline';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 import {
   Bold,
   Check,
@@ -14,23 +16,15 @@ import {
   Pencil,
   Smile,
   Sparkles,
+  UnderlineIcon,
+  Underline as UnderLineIcon,
   Wand2,
   Zap,
 } from 'lucide-react';
 import CharacterCount from '@tiptap/extension-character-count';
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from '@/components/ui/command';
+
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Input } from './ui/input';
+
 const instructions = [
   {
     icon: <Sparkles className="w-3 h-3" />,
@@ -99,9 +93,14 @@ const instructions = [
 const TextEditor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCommand, setShowCommand] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [customInstruction, setCustomInstruction] = useState<string>('');
   const editor = useEditor({
-    extensions: [StarterKit, CharacterCount.configure({ limit: 5000 })],
+    extensions: [
+      StarterKit,
+      CharacterCount.configure({ limit: 5000 }),
+      Underline,
+    ],
     content: '<p>Start typing here...</p>',
     autofocus: true,
     editorProps: {
@@ -144,7 +143,10 @@ const TextEditor = () => {
     setCustomInstruction('');
     setShowCommand(false);
   };
-
+  const onEmojiClick = (emojiData: EmojiClickData) => {
+    editor?.chain().focus().insertContent(emojiData.emoji).run();
+    setShowEmojiPicker(false);
+  };
   // const handleAIProcess = async (command: string) => {
   //   setIsProcessing(true);
   //   // GET VALUE FROM EDITOR
@@ -183,18 +185,18 @@ const TextEditor = () => {
           editor.state.selection.from,
           editor.state.selection.to
         );
-    const skeletonHtml = `<div class="animate-pulse">
-        ${selectedText
-          .split('\n')
-          .map(() => '<div class="h-4 bg-gray-200 rounded w-full mb-2"></div>')
-          .join('')}
-      </div>`;
+    // const skeletonHtml = `<div class="animate-pulse">
+    //     ${selectedText
+    //       .split('\n')
+    //       .map(() => '<div class="h-4 bg-gray-900 rounded w-full mb-2"></div>')
+    //       .join('')}
+    //   </div>`;
 
-    if (editor.state.selection.empty) {
-      editor.commands.setContent(skeletonHtml);
-    } else {
-      editor.commands.insertContentAt(editor.state.selection, skeletonHtml);
-    }
+    // if (editor.state.selection.empty) {
+    //   editor.commands.setContent(skeletonHtml);
+    // } else {
+    //   editor.commands.insertContentAt(editor.state.selection, skeletonHtml);
+    // }
     try {
       const response = await fetch('/api/ai/content', {
         method: 'POST',
@@ -258,22 +260,6 @@ const TextEditor = () => {
         </div>
         {/* <Button onClick={check}>Check</Button> */}
         <div className="flex gap-2 items-center">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            className={editor.isActive('bold') ? 'bg-muted' : ''}
-          >
-            <Bold className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={editor.isActive('italic') ? 'bg-muted' : ''}
-          >
-            <Italic className="h-4 w-4" />
-          </Button>
           <Popover>
             <PopoverTrigger>
               <Button
@@ -281,8 +267,8 @@ const TextEditor = () => {
                 onClick={() => setShowCommand(!showCommand)}
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Processing...' : 'AI Process'}
-                <Wand2 className="h-4 w-4 ml-2" />
+                {/* {isProcessing ? 'Processing...' : 'AI Process'} */}
+                <Wand2 className="h-4 w-4 " />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-48 h-80 overflow-y-auto p-1">
@@ -305,7 +291,7 @@ const TextEditor = () => {
                     key={index}
                     variant="ghost"
                     size="sm"
-                    className="w-full justify-start gap-2 text-xs py-1 px-2"
+                    className="w-full justify-start   gap-2 text-xs "
                     onClick={() =>
                       handleAIProcess(instruction.text, instruction.prompt)
                     }
@@ -316,6 +302,48 @@ const TextEditor = () => {
                   </Button>
                 ))}
               </div>
+            </PopoverContent>
+          </Popover>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            className={editor.isActive('bold') ? 'bg-muted' : ''}
+          >
+            <Bold className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            className={editor.isActive('italic') ? 'bg-muted' : ''}
+          >
+            <Italic className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => editor?.chain().focus().toggleUnderline().run()}
+            className={editor?.isActive('underline') ? 'bg-muted' : ''}
+          >
+            <UnderlineIcon className="h-4 w-4" />
+          </Button>
+          <Popover open={showEmojiPicker} onOpenChange={setShowEmojiPicker}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              >
+                <Smile className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="p-0">
+              <EmojiPicker
+                height={420}
+                className=" h-220"
+                onEmojiClick={onEmojiClick}
+              />
             </PopoverContent>
           </Popover>
         </div>
