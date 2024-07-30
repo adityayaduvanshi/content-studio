@@ -1,14 +1,14 @@
-"use client";
-import React, { useCallback, useEffect, useState } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import Underline from "@tiptap/extension-underline";
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import Placeholder from "@tiptap/extension-placeholder";
-import DragNdropImage from "./ui/dragNdropImage";
-import { Input } from "@/components/ui/input";
+'use client';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import Underline from '@tiptap/extension-underline';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
+import Placeholder from '@tiptap/extension-placeholder';
+import DragNdropImage from './ui/dragNdropImage';
+import { Input } from '@/components/ui/input';
 
 import {
   Bold,
@@ -25,61 +25,61 @@ import {
   Underline as UnderLineIcon,
   Wand2,
   Zap,
-} from "lucide-react";
-import CharacterCount from "@tiptap/extension-character-count";
+} from 'lucide-react';
+import CharacterCount from '@tiptap/extension-character-count';
 
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 const instructions = [
   {
     icon: <Sparkles className="w-3 h-3" />,
-    text: "Summarize",
-    prompt: "Summarize the following text:",
+    text: 'Summarize',
+    prompt: 'Summarize the following text:',
   },
   {
     icon: <Zap className="w-3 h-3" />,
-    text: "Expand",
-    prompt: "Expand on the following text:",
+    text: 'Expand',
+    prompt: 'Expand on the following text:',
   },
   {
     icon: <Check className="w-3 h-3" />,
-    text: "Improve Post",
-    prompt: "Improve the following text:",
+    text: 'Improve Post',
+    prompt: 'Improve the following text:',
   },
   {
     icon: <Pencil className="w-3 h-3" />,
-    text: "Same But Different",
-    prompt: "Rewrite the following text keeping the same meaning:",
+    text: 'Same But Different',
+    prompt: 'Rewrite the following text keeping the same meaning:',
   },
   {
     icon: <MessageSquare className="w-3 h-3" />,
-    text: "Continue Writing",
-    prompt: "Continue the following text:",
+    text: 'Continue Writing',
+    prompt: 'Continue the following text:',
   },
   {
     icon: <Sparkles className="w-3 h-3" />,
-    text: "Fix Grammar",
-    prompt: "Fix the grammar in the following text:",
+    text: 'Fix Grammar',
+    prompt: 'Fix the grammar in the following text:',
   },
   {
     icon: <Smile className="w-3 h-3" />,
-    text: "Add Emojis",
-    prompt: "Add appropriate emojis to the following text:",
+    text: 'Add Emojis',
+    prompt: 'Add appropriate emojis to the following text:',
   },
   {
     icon: <Zap className="w-3 h-3" />,
-    text: "Make It More Engaging",
-    prompt: "Make the following text more engaging:",
+    text: 'Make It More Engaging',
+    prompt: 'Make the following text more engaging:',
   },
   {
     icon: <Coffee className="w-3 h-3" />,
-    text: "Make It More Assertive",
-    prompt: "Make the following text more assertive:",
+    text: 'Make It More Assertive',
+    prompt: 'Make the following text more assertive:',
   },
   {
     icon: <Coffee className="w-3 h-3" />,
-    text: "Make It More Casual",
-    prompt: "Make the following text more casual:",
+    text: 'Make It More Casual',
+    prompt: 'Make the following text more casual:',
   },
   // {
   //   icon: <Smile className="w-3 h-3" />,
@@ -100,23 +100,24 @@ const TextEditor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCommand, setShowCommand] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [customInstruction, setCustomInstruction] = useState<string>("");
+  const [customInstruction, setCustomInstruction] = useState<string>('');
+  const [uploadedMedia, setUploadedMedia] = useState<string[]>([]);
   const editor = useEditor({
     extensions: [
       StarterKit,
       CharacterCount.configure({ limit: 5000 }),
       Underline,
       Placeholder.configure({
-        placeholder: "Write something …",
-        emptyEditorClass: "is-editor-empty",
+        placeholder: 'Write something …',
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
-    content: "",
-    autofocus: "end",
+    content: '',
+    autofocus: 'end',
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-2 focus:outline-none",
+          'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-2 focus:outline-none',
       },
     },
     immediatelyRender: false,
@@ -135,11 +136,11 @@ const TextEditor = () => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey) {
-        if (event.key === "z") {
+        if (event.key === 'z') {
           event.preventDefault();
           editor?.commands.undo();
         }
-        if (event.key === "y" || (event.shiftKey && event.key === "Z")) {
+        if (event.key === 'y' || (event.shiftKey && event.key === 'Z')) {
           event.preventDefault();
           editor?.commands.redo();
         }
@@ -149,9 +150,9 @@ const TextEditor = () => {
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown]);
 
@@ -160,7 +161,7 @@ const TextEditor = () => {
   }
   const handleCustomInstruction = () => {
     handleAIProcess(customInstruction, customInstruction);
-    setCustomInstruction("");
+    setCustomInstruction('');
     setShowCommand(false);
   };
   const onEmojiClick = (emojiData: EmojiClickData) => {
@@ -218,10 +219,10 @@ const TextEditor = () => {
     //   editor.commands.insertContentAt(editor.state.selection, skeletonHtml);
     // }
     try {
-      const response = await fetch("/api/ai/content", {
-        method: "POST",
+      const response = await fetch('/api/ai/content', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           prompt: `${prompt}\n\n${selectedText}`,
@@ -230,22 +231,22 @@ const TextEditor = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to process with OpenAI");
+        throw new Error('Failed to process with OpenAI');
       }
 
       const data = await response.json();
-      console.log(data, "aaaaaaaaaaaaaa");
+      console.log(data, 'aaaaaaaaaaaaaa');
       const processedText = data.result;
 
       if (editor.state.selection.empty) {
         editor.commands.setContent(processedText);
-        console.log(processedText, "sss");
+        console.log(processedText, 'sss');
       } else {
         editor.commands.insertContentAt(editor.state.selection, processedText);
-        console.log(processedText, "aaaaa");
+        console.log(processedText, 'aaaaa');
       }
     } catch (error) {
-      console.error("Error processing with OpenAI:", error);
+      console.error('Error processing with OpenAI:', error);
       // Handle error (e.g., show an error message to the user)
     } finally {
       setIsProcessing(false);
@@ -253,18 +254,22 @@ const TextEditor = () => {
   };
 
   const handleInputKeyDown = (event) => {
-    if (event.key === "Enter" && customInstruction.trim()) {
+    if (event.key === 'Enter' && customInstruction.trim()) {
       handleCustomInstruction();
     }
   };
   const check = async () => {
     try {
-      const response = await axios.get("/api/ai/check");
+      const response = await axios.get('/api/ai/check');
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const handleMediaUploaded = (urls: string[]) => {
+    setUploadedMedia((prevUrls) => [...prevUrls, ...urls]);
+  };
+
   return (
     <>
       <style>{placeholderStyles}</style>
@@ -331,7 +336,7 @@ const TextEditor = () => {
               variant="outline"
               size="icon"
               onClick={() => editor.chain().focus().toggleBold().run()}
-              className={editor.isActive("bold") ? "bg-muted" : ""}
+              className={editor.isActive('bold') ? 'bg-muted' : ''}
             >
               <Bold className="h-4 w-4" />
             </Button>
@@ -339,7 +344,7 @@ const TextEditor = () => {
               variant="outline"
               size="icon"
               onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={editor.isActive("italic") ? "bg-muted" : ""}
+              className={editor.isActive('italic') ? 'bg-muted' : ''}
             >
               <Italic className="h-4 w-4" />
             </Button>
@@ -347,7 +352,7 @@ const TextEditor = () => {
               variant="outline"
               size="icon"
               onClick={() => editor?.chain().focus().toggleUnderline().run()}
-              className={editor?.isActive("underline") ? "bg-muted" : ""}
+              className={editor?.isActive('underline') ? 'bg-muted' : ''}
             >
               <UnderlineIcon className="h-4 w-4" />
             </Button>
@@ -376,25 +381,50 @@ const TextEditor = () => {
                   <ImagePlus className="h-4 w-4" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-96 p-0">
+              <PopoverContent className="  w-96 p-0">
                 <DragNdropImage
                   onFilesSelected={(files) => {
                     // Handle the selected files here
                     console.log(files);
                     // You might want to upload the files to a server or process them
                   }}
+                  onMediaUploaded={handleMediaUploaded}
                   width="100%"
-                  height="200px"
+                  height="400px"
                 />
 
-                <div className="py-6 px-3 font-semibold text-lg flex gap-16">
+                {/* <div className="py-6 px-3 font-semibold text-lg flex gap-16">
                   Web URL
                   <Input className=" w-52 h-8"></Input>
-                </div>
+                </div> */}
               </PopoverContent>
             </Popover>
           </div>
         </div>
+        {uploadedMedia.length > 0 && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Uploaded Media:</h3>
+            <div className="flex flex-wrap mt-2">
+              {uploadedMedia.map((url, index) => (
+                <div key={index} className="m-2">
+                  {url.match(/\.(jpeg|jpg|gif|png)$/) != null ? (
+                    <img
+                      src={url}
+                      alt={`Uploaded ${index}`}
+                      className="w-32 h-32 object-cover rounded"
+                    />
+                  ) : (
+                    <video
+                      src={url}
+                      controls
+                      className="w-32 h-32 object-cover rounded"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
