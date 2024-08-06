@@ -150,7 +150,7 @@ const DragNdropImage: React.FC<DragNdropProps> = ({
                 />
                 <label
                   htmlFor="browse"
-                  className="mt-4 text-blue-400 inline-block border border-blue-400 py-1 px-4 rounded cursor-pointer"
+                  className="mt-4 text-blue-400 inline-block border border-blue-400 py-1 px-4 rounded-sm cursor-pointer"
                 >
                   Browse files
                 </label>

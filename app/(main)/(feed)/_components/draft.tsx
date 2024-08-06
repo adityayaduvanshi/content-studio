@@ -16,8 +16,8 @@ const Draft: React.FC = () => {
       >
         + New Draft
       </Button>
-      <p className="text-gray-700 mt-3 ml-1 p-1 rounded-md transition-all duration-200 cursor-pointer hover:bg-gray-100">Drafts</p>
-      <p className="text-gray-700 mt-2 ml-1 p-1 rounded-md transition-all duration-200 cursor-pointer hover:bg-gray-100">Scheduled</p>
+      <p className="text-gray-700 mt-3 ml-1 p-1 rounded-md transition-all duration-200 cursor-pointer hover:bg-gray-100" onClick={() => router.push('/draft')}>Drafts</p>
+      <p className="text-gray-700 mt-2 ml-1 p-1 rounded-md transition-all duration-200 cursor-pointer hover:bg-gray-100" onClick={() => router.push('/schedule')}>Scheduled</p>
     </div>
   );
 };

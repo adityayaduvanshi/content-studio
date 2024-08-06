@@ -97,3 +97,30 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #c1c1c1 #f1f1f1;
 }
+
+
+@layer components {
+  .rbc-header {
+    @apply py-2 font-semibold text-gray-600 border-b border-gray-200;
+  }
+
+  .rbc-month-view {
+    @apply border-none;
+  }
+
+  .rbc-day-bg {
+    @apply border-r border-b border-gray-200;
+  }
+
+  .rbc-off-range-bg {
+    @apply bg-gray-100;
+  }
+
+  .rbc-today {
+    @apply bg-blue-50;
+  }
+
+  .rbc-event {
+    @apply p-1 text-xs;
+  }
+}
